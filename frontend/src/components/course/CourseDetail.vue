@@ -2931,7 +2931,7 @@ export default {
     ...mapStores(useCourseStore)
   },
   mounted() {
-    this.courseStore.getCourseDetail(1)
+    this.courseStore.getCourseDetail(this.$route.params.id);
   },
   methods: {
     currency(value) {
