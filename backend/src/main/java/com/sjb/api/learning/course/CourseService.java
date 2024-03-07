@@ -12,13 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sjb.api.common.BaseResponseStatus.POST_COURSE_PRE_EXIST_NAME;
+
 @RequiredArgsConstructor
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
 
     public PostCourseRes createCourse(PostCourseReq request) throws BaseException {
-        Optional<Course> result = courseRepository.findByName(request.getName());
+
+        if(courseRepository.existsByName(request.getName())) {
+            throw new BaseException(POST_COURSE_PRE_EXIST_NAME);
+        }
 
         Course course = Course.builder()
                 .name(request.getName())

@@ -16,8 +16,10 @@ public enum BaseResponseStatus {
      * 2000 : COURSE 에러
      */
     POST_COURSE_EMPTY_NAME(false, 2001, "코스의 이름을 입력해주세요."),
-    POST_COURSE_EMPTY_PRICE(false, 2001, "코스의 가격을 입력해주세요."),
-    POST_COURSE_EMPTY_DESCRIPTION(false, 2001, "코스의 설명을 입력해주세요.");
+    POST_COURSE_EMPTY_PRICE(false, 2002, "코스의 가격을 입력해주세요."),
+    POST_COURSE_EMPTY_DESCRIPTION(false, 2003, "코스의 설명을 입력해주세요."),
+
+    POST_COURSE_PRE_EXIST_NAME(false, 2004, "이미 존재하는 코스 이름입니다. 다른 이름을 입력해주세요.");
 
     private final boolean isSuccess;
     private final int code;
