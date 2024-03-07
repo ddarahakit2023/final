@@ -9,7 +9,7 @@ const routes = [
     component: CoursePage,
     children: [
       { path: "list", component: CourseList },
-      { path: ":idx", component: CourseDetail }
+      { path: ":id", component: CourseDetail }
     ],
   },
 ];
