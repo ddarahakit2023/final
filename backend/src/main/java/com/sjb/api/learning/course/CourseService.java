@@ -3,6 +3,7 @@ package com.sjb.api.learning.course;
 import com.sjb.api.common.BaseException;
 import com.sjb.api.learning.course.model.Course;
 import com.sjb.api.learning.course.model.request.PostCourseReq;
+import com.sjb.api.learning.course.model.response.GetCourseRes;
 import com.sjb.api.learning.course.model.response.PostCourseRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static com.sjb.api.common.BaseResponseStatus.COURSE_LIST_NULL;
 import static com.sjb.api.common.BaseResponseStatus.POST_COURSE_PRE_EXIST_NAME;
 
 @RequiredArgsConstructor
@@ -40,6 +42,28 @@ public class CourseService {
                 .description(course.getDescription())
                 .price(course.getPrice())
                 .build();
+    }
+
+
+    public List<GetCourseRes> listCourse() throws BaseException {
+        List<Course> courseList = courseRepository.findAll();
+        if (courseList.isEmpty()) {
+            throw new BaseException(COURSE_LIST_NULL);
+        }
+
+        List<GetCourseRes> getCourseResList = new ArrayList<>();
+
+        for (Course course : courseList) {
+            GetCourseRes getCourseRes = GetCourseRes.builder()
+                    .id(course.getId())
+                    .name(course.getName())
+                    .description(course.getDescription())
+                    .price(course.getPrice())
+                    .build();
+
+            getCourseResList.add(getCourseRes);
+        }
+        return getCourseResList;
     }
 
 }
