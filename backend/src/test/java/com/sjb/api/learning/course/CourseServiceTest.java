@@ -14,9 +14,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static com.sjb.api.common.BaseResponseStatus.COURSE_LIST_NULL;
-import static com.sjb.api.common.BaseResponseStatus.POST_COURSE_PRE_EXIST_NAME;
+import static com.sjb.api.common.BaseResponseStatus.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -113,5 +113,35 @@ class CourseServiceTest {
         assertEquals(COURSE_LIST_NULL, exception.getStatus());
     }
 
+    @Test
+    void courseService_readCourse_success() {
+        // given
+        given(courseRepository.findById(any(Long.class))).willReturn(Optional.of(course));
+        // when
+        GetCourseRes response;
+        try {
+            response = courseService.readCourse(1L);
+        } catch (BaseException e) {
+            throw new RuntimeException(e);
+        }
 
+        // then
+        assertEquals(response.getId(), course.getId());
+        assertEquals(response.getName(), course.getName());
+
+    }
+
+    @Test
+    void courseService_readCourse_fail_null() {
+        // given
+
+        given(courseRepository.findById(any(Long.class))).willReturn(Optional.empty());
+        // when
+        BaseException exception = assertThrows(BaseException.class, () -> {
+            courseService.readCourse(1L);
+        });
+
+        // then
+        assertEquals(COURSE_NULL, exception.getStatus());
+    }
 }

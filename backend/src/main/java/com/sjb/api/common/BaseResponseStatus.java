@@ -20,7 +20,8 @@ public enum BaseResponseStatus {
     POST_COURSE_EMPTY_DESCRIPTION(false, 2003, "코스의 설명을 입력해주세요."),
 
     POST_COURSE_PRE_EXIST_NAME(false, 2004, "이미 존재하는 코스 이름입니다. 다른 이름을 입력해주세요."),
-    COURSE_LIST_NULL(false,2005,"등록된 코스가 존재하지 않습니다.");
+    COURSE_LIST_NULL(false,2005,"등록된 코스가 존재하지 않습니다."),
+    COURSE_NULL(false,2006,"등록된 코스가 존재하지 않습니다.");
 
     private final boolean isSuccess;
     private final int code;
