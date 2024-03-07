@@ -5,7 +5,7 @@ const backend = "http://localhost:8080";
 
 
 export const useCourseStore = defineStore('course', {
-  state: () => ({ courseList: [] }),
+  state: () => ({ course: {id:0, name:"", description:"", price: 0}, courseList: [] }),
 
   actions: {
     async getCourseList() {
@@ -15,12 +15,12 @@ export const useCourseStore = defineStore('course', {
       
       return this.courseList;
     },
-    async getCourseDetail() {
-      let response = await axios.get(backend+"/course/list");
+    async getCourseDetail(id) {
+      let response = await axios.get(backend+"/course/"+id);
 
-      this.courseList = response.data.result;
+      this.course = response.data.result;
       
-      return this.courseList;
+      return this.course;
     },
   },
 })

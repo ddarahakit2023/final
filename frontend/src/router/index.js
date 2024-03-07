@@ -1,11 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
-import MainPage from "@/pages/MainPage.vue";
-
+import CourseList from "@/components/course/CourseList.vue"
+import CourseDetail from "@/components/course/CourseDetail.vue"
+import CoursePage from "@/pages/CoursePage.vue";
 
 const routes = [
-
-  { path: "/", component: MainPage  },
-
+  {
+    path: "/course",
+    component: CoursePage,
+    children: [
+      { path: "list", component: CourseList },
+      { path: ":idx", component: CourseDetail }
+    ],
+  },
 ];
 
 const router = createRouter({
