@@ -3,6 +3,7 @@ package com.sjb.api.learning.course;
 import com.sjb.api.common.BaseException;
 import com.sjb.api.common.BaseResponse;
 import com.sjb.api.learning.course.model.request.PostCourseReq;
+import com.sjb.api.learning.course.model.response.GetCourseRes;
 import com.sjb.api.learning.course.model.response.PostCourseRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +37,17 @@ public class CourseController {
             return new BaseResponse<>(response);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+
+    @RequestMapping(method = RequestMethod.GET, value = "/list")
+    public BaseResponse<List<GetCourseRes>> listCourse() {
+        try {
+            List<GetCourseRes> getProductResList = courseService.listCourse();
+            return new BaseResponse<>(getProductResList);
+        } catch(BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
         }
     }
 
