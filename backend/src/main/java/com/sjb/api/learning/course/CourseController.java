@@ -51,4 +51,13 @@ public class CourseController {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    public BaseResponse<GetCourseRes> readCourse(@PathVariable Long id) {
+        try {
+            GetCourseRes getCourseRes = courseService.readCourse(id);
+            return new BaseResponse<>(getCourseRes);
+        } catch(BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

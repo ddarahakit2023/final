@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.sjb.api.common.BaseResponseStatus.COURSE_LIST_NULL;
-import static com.sjb.api.common.BaseResponseStatus.POST_COURSE_PRE_EXIST_NAME;
+import static com.sjb.api.common.BaseResponseStatus.*;
 
 @RequiredArgsConstructor
 @Service
@@ -66,4 +65,16 @@ public class CourseService {
         return getCourseResList;
     }
 
+
+    public GetCourseRes readCourse(Long id) throws BaseException {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new BaseException(COURSE_NULL));
+
+        GetCourseRes getCourseRes = GetCourseRes.builder()
+                .id(course.getId())
+                .name(course.getName())
+                .description(course.getDescription())
+                .price(course.getPrice())
+                .build();
+        return getCourseRes;
+    }
 }
