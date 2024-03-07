@@ -1,6 +1,7 @@
 <template>
-    <div @click="toggleSidebar" :class="['sidebar_dimmed', 'e-sidebar-dimmed', { 'is-active': isActive }]" data-type="close"></div>
-    <aside :class="['mobile_left_aside', { 'is-active': isActive }]">
+    <div @click="mobileAsideActiveStore.toggleAside" :class="['sidebar_dimmed', 'e-sidebar-dimmed', { 'is-active': mobileAsideActiveStore.isActive }]"
+        data-type="close"></div>
+    <aside :class="['mobile_left_aside', { 'is-active': mobileAsideActiveStore.isActive }]">
 
         <div class="search search_bar header_search header_search--lnb e_header_search">
             <label class="visually-hidden" for="mobile-aside-input">통합 검색</label>
@@ -2992,16 +2993,17 @@
 </template>
 
 <script>
+import { mapStores } from 'pinia'
+import { useMobileAsideActiveStore } from '@/stores/useMobileAsideActiveStore';
+
 export default {
     name: 'HeaderComponent',
     data() {
         return { isActive: false }
     },
-    methods: {
-      toggleSidebar: function() {
-        this.isActive = !this.isActive;
-      }
-    }
+    computed: {
+        ...mapStores(useMobileAsideActiveStore)
+    },
 }
 </script>
 
