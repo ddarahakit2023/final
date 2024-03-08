@@ -8,6 +8,7 @@ import com.sjb.api.learning.course.model.response.PostCourseRes;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class CourseController {
     private final CourseService courseService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/create")
-    public BaseResponse<PostCourseRes> createCourse(@RequestBody PostCourseReq request) {
+    public BaseResponse<PostCourseRes> createCourse(@RequestPart MultipartFile image, @RequestPart  PostCourseReq request) {
 
         if (request.getName() == null) {
             return new BaseResponse<>(POST_COURSE_EMPTY_NAME);
@@ -34,7 +35,7 @@ public class CourseController {
         }
 
         try {
-            PostCourseRes response = courseService.createCourse(request);
+            PostCourseRes response = courseService.createCourse(image, request);
             return new BaseResponse<>(response);
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

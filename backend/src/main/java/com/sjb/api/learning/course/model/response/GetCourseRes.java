@@ -8,6 +8,7 @@ import lombok.Data;
 public class GetCourseRes {
     private Long id;
     private String name;
+    private String image;
     private String description;
     private Integer price;
 }

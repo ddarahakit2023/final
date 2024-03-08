@@ -25,6 +25,8 @@ public class Course {
     @Column(nullable = false, length = 100, unique = true)
     private String name;
 
+    @Column(length = 200)
+    private String image;
 
     @Column(columnDefinition = "TEXT")
     private String description;

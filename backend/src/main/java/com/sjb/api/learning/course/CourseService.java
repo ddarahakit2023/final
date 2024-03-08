@@ -1,17 +1,26 @@
 package com.sjb.api.learning.course;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.sjb.api.common.BaseException;
 import com.sjb.api.learning.course.model.Course;
 import com.sjb.api.learning.course.model.request.PostCourseReq;
 import com.sjb.api.learning.course.model.response.GetCourseRes;
 import com.sjb.api.learning.course.model.response.PostCourseRes;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.sjb.api.common.BaseResponseStatus.*;
 
@@ -19,15 +28,25 @@ import static com.sjb.api.common.BaseResponseStatus.*;
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final AmazonS3 s3;
+    @Value("${cloud.aws.s3.bucket}")
+    private String bucket;
 
-    public PostCourseRes createCourse(PostCourseReq request) throws BaseException {
+    public PostCourseRes createCourse(MultipartFile image, PostCourseReq request) throws BaseException {
 
         if(courseRepository.existsByName(request.getName())) {
             throw new BaseException(POST_COURSE_PRE_EXIST_NAME);
         }
 
+        String imageUrl = null;
+        if (image != null) {
+            imageUrl = uploadImage(image);
+        }
+
+
         Course course = Course.builder()
                 .name(request.getName())
+                .image(imageUrl)
                 .description(request.getDescription())
                 .price(request.getPrice())
                 .build();
@@ -38,10 +57,33 @@ public class CourseService {
         return PostCourseRes.builder()
                 .id(course.getId())
                 .name(course.getName())
+                .image(course.getImage())
                 .description(course.getDescription())
                 .price(course.getPrice())
                 .build();
     }
+
+
+    public String uploadImage(MultipartFile image) {
+        String originalName = image.getOriginalFilename();
+        String folderPath = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+        String uuid = UUID.randomUUID().toString();
+        String saveFilePath = folderPath + "/" + uuid + "_" + originalName;
+
+        try {
+            ObjectMetadata metadata = new ObjectMetadata();
+            metadata.setContentLength(image.getSize());
+            metadata.setContentType(image.getContentType());
+
+            s3.putObject(bucket, saveFilePath, image.getInputStream(), metadata);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return s3.getUrl(bucket, saveFilePath).toString();
+    }
+
 
 
     public List<GetCourseRes> listCourse() throws BaseException {
@@ -56,6 +98,7 @@ public class CourseService {
             GetCourseRes getCourseRes = GetCourseRes.builder()
                     .id(course.getId())
                     .name(course.getName())
+                    .image(course.getImage())
                     .description(course.getDescription())
                     .price(course.getPrice())
                     .build();
@@ -65,13 +108,13 @@ public class CourseService {
         return getCourseResList;
     }
 
-
     public GetCourseRes readCourse(Long id) throws BaseException {
         Course course = courseRepository.findById(id).orElseThrow(() -> new BaseException(COURSE_NULL));
 
         GetCourseRes getCourseRes = GetCourseRes.builder()
                 .id(course.getId())
                 .name(course.getName())
+                .image(course.getImage())
                 .description(course.getDescription())
                 .price(course.getPrice())
                 .build();

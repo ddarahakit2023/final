@@ -11,6 +11,8 @@ public class PostCourseRes {
 
     private String name;
 
+    private String image;
+
     private String description;
 
     private Integer price;
