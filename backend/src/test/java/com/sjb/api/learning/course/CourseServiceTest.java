@@ -11,6 +11,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ class CourseServiceTest {
 
     private static Course course;
     private static PostCourseReq request;
+    private static MultipartFile image;
     @BeforeAll
     static void setUp() {
 
@@ -46,6 +48,7 @@ class CourseServiceTest {
                 .price(1000)
                 .description("리눅스 기초 강의입니다.")
                 .build();
+
     }
 
     @Test
@@ -56,7 +59,7 @@ class CourseServiceTest {
         // when
         PostCourseRes response;
         try {
-            response = courseService.createCourse(request);
+            response = courseService.createCourse(image, request);
         } catch (BaseException e) {
             throw new RuntimeException(e);
         }
@@ -73,7 +76,7 @@ class CourseServiceTest {
 
         // when
         BaseException exception = assertThrows(BaseException.class, () -> {
-            courseService.createCourse(request);
+            courseService.createCourse(image, request);
         });
 
         // then
