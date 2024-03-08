@@ -13,7 +13,7 @@
               <div class="cd-header__left ac-cd-5 ac-ct-12">
                 <div class="cd-header__thumbnail-cover">
                   <div class="cd-header__thumbnail cd-header__thumbnail--discount">
-                    <img src="/public/courses/333042/cover/654fc01a-31c1-4138-addf-69527cae68bc/333042.png"
+                    <img :src="courseStore.course.image"
                       alt="Thumbnail">
                     <div class="thumbnail-button-cover thumbnail-bottom-button-cover e-preview e-course-preview">
                       <button class="thumbnail-bottom-button">
