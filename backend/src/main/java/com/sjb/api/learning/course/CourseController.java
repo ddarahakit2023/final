@@ -15,6 +15,7 @@ import static com.sjb.api.common.BaseResponseStatus.*;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/course")
 public class CourseController {
     private final CourseService courseService;

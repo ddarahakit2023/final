@@ -67,7 +67,7 @@ class CourseServiceTest {
     }
 
     @Test
-    void courseService_createCourse_pre_exist_name() {
+    void courseService_createCourse_fail_pre_exist_name() {
         // given
         given(courseRepository.existsByName("리눅스 기초")).willReturn(true);
 
