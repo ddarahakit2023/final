@@ -8,8 +8,8 @@
                     <figure class="image is_thumbnail">
 
                         <img loading="lazy"
-                            src="/public/courses/324145/cover/184a19f3-c99f-4eea-a764-dc8e71d4c37a/324145.png"
-                            class="swiper-lazy" alt="324145.png">
+                            :src="course.image"
+                            class="swiper-lazy">
                         <div class="onload_placeholder"></div>
                         <div class="swiper-lazy-preloader"></div>
 
