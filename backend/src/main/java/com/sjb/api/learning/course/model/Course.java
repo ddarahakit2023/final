@@ -35,7 +35,6 @@ public class Course {
     @ColumnDefault("1")
     private Boolean isDisplay;
 
-
     @Column(updatable = false, nullable = false)
     private Date createdAt;
 
