@@ -1,18 +1,27 @@
 package com.sjb.api.learning.course;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.sjb.api.common.BaseException;
 import com.sjb.api.learning.course.model.Course;
 import com.sjb.api.learning.course.model.request.PostCourseReq;
 import com.sjb.api.learning.course.model.response.GetCourseRes;
 import com.sjb.api.learning.course.model.response.PostCourseRes;
+import com.sjb.api.member.MemberService;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,12 +36,15 @@ class CourseServiceTest {
     @Mock
     private CourseRepository courseRepository;
 
+    @Mock
+    private AmazonS3 s3;
+
     @InjectMocks
     private CourseService courseService;
 
     private static Course course;
     private static PostCourseReq request;
-    private static MultipartFile image;
+    private static MockMultipartFile image;
     @BeforeAll
     static void setUp() {
 
@@ -49,17 +61,39 @@ class CourseServiceTest {
                 .description("리눅스 기초 강의입니다.")
                 .build();
 
+        image = new MockMultipartFile("file", "test.png", "text/plain", "test file".getBytes(StandardCharsets.UTF_8));
+
     }
 
     @Test
-    void courseService_createCourse_success() {
+    void courseService_createCourse_success_with_image() throws MalformedURLException {
         // given
+        ReflectionTestUtils.setField(courseService, "bucket", "ddarahakit2023-s3");
+        given(courseRepository.save(any(Course.class))).willReturn(course);
+        given(s3.getUrl(any(String.class), any(String.class))).willReturn(new URL("https://ddarahakit2023-s3.s3.ap-northeast-2.amazonaws.com/2024/03/08/9cf04deb-38cc-4f09-ae2f-1aa14665f643_test.png"));
+        // when
+        PostCourseRes response;
+        try {
+            response = courseService.createCourse(image, request);
+        } catch (BaseException e) {
+            throw new RuntimeException(e);
+        }
+
+        // then
+        assertNotNull(response.getId());
+        assertEquals(request.getName(),  response.getName());
+    }
+
+    @Test
+    void courseService_createCourse_success_without_image() {
+        // given
+        ReflectionTestUtils.setField(courseService, "bucket", "ddarahakit2023-s3");
         given(courseRepository.save(any(Course.class))).willReturn(course);
 
         // when
         PostCourseRes response;
         try {
-            response = courseService.createCourse(image, request);
+            response = courseService.createCourse(null, request);
         } catch (BaseException e) {
             throw new RuntimeException(e);
         }

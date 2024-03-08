@@ -38,7 +38,11 @@ public class CourseService {
             throw new BaseException(POST_COURSE_PRE_EXIST_NAME);
         }
 
-        String imageUrl = uploadImage(image);
+        String imageUrl = null;
+        if (image != null) {
+            imageUrl = uploadImage(image);
+        }
+
 
         Course course = Course.builder()
                 .name(request.getName())
@@ -79,6 +83,7 @@ public class CourseService {
 
         return s3.getUrl(bucket, saveFilePath).toString();
     }
+
 
 
     public List<GetCourseRes> listCourse() throws BaseException {
