@@ -20,6 +20,27 @@
                             placeholder="example@inflab.com" />
                         <span class="form__error form__error--email form__error--hide"></span>
                     </div>
+                    
+                    <div class="form__input-block">
+                        <label for="name" class="form__label">이름</label>
+
+                        <div
+                            class="ac-input-with-item--large password-input form__input--password form__input e-password-confirm ">
+
+                            <input v-model="member.name" class="e-sign-up-input" value="" data-kv="name" type="text"
+                                spellcheck="false" id="name" placeholder="이름" />
+                            <span class="e-toggle-password form__toggle-password form__toggle-password--hidden"><svg
+                                    width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                                    <path fill="#212529"
+                                        d="M10.333 8c0 1.289-1.044 2.333-2.333 2.333C6.71 10.333 5.667 9.29 5.667 8 5.667 6.711 6.71 5.667 8 5.667c1.289 0 2.333 1.044 2.333 2.333z" />
+                                    <path fill="#212529" fill-rule="evenodd"
+                                        d="M8 2.333c-2.288 0-4.083 1.023-5.37 2.16C1.348 5.63.544 6.902.22 7.469.03 7.8.03 8.2.22 8.533c.323.566 1.127 1.838 2.41 2.973 1.287 1.138 3.082 2.16 5.37 2.16 2.288 0 4.083-1.022 5.37-2.16 1.283-1.135 2.087-2.407 2.41-2.973.19-.333.19-.733 0-1.065-.323-.567-1.127-1.839-2.41-2.974-1.287-1.138-3.082-2.16-5.37-2.16zm-6.912 5.63c.295-.516 1.035-1.685 2.205-2.72C4.461 4.21 6.03 3.333 8 3.333c1.97 0 3.54.877 4.707 1.91 1.17 1.035 1.91 2.204 2.205 2.72.008.015.01.028.01.037 0 .01-.002.022-.01.037-.295.516-1.035 1.685-2.205 2.72-1.168 1.033-2.737 1.91-4.707 1.91-1.97 0-3.54-.877-4.707-1.91-1.17-1.035-1.91-2.204-2.205-2.72-.008-.015-.01-.028-.01-.037 0-.01.002-.022.01-.037z"
+                                        clip-rule="evenodd" />
+                                </svg></span>
+                        </div>
+
+                        <span class="form__error form__error--name form__error--hide"></span>
+                    </div>
                     <div class="form__input-block">
                         <label for="password" class="form__label">비밀번호</label>
 
@@ -51,27 +72,6 @@
                                 없는 문자가 포함되어 있습니다.</span>
                         </p>
                     </div>
-                    <div class="form__input-block">
-                        <label for="passwordConfirm" class="form__label">비밀번호 확인</label>
-
-                        <div
-                            class="ac-input-with-item--large password-input form__input--password form__input e-password-confirm ">
-
-                            <input class="e-sign-up-input" value="" data-kv="passwordConfirm" type="password"
-                                spellcheck="false" id="passwordConfirm" placeholder="******" />
-                            <span class="e-toggle-password form__toggle-password form__toggle-password--hidden"><svg
-                                    width="16" height="16" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-                                    <path fill="#212529"
-                                        d="M10.333 8c0 1.289-1.044 2.333-2.333 2.333C6.71 10.333 5.667 9.29 5.667 8 5.667 6.711 6.71 5.667 8 5.667c1.289 0 2.333 1.044 2.333 2.333z" />
-                                    <path fill="#212529" fill-rule="evenodd"
-                                        d="M8 2.333c-2.288 0-4.083 1.023-5.37 2.16C1.348 5.63.544 6.902.22 7.469.03 7.8.03 8.2.22 8.533c.323.566 1.127 1.838 2.41 2.973 1.287 1.138 3.082 2.16 5.37 2.16 2.288 0 4.083-1.022 5.37-2.16 1.283-1.135 2.087-2.407 2.41-2.973.19-.333.19-.733 0-1.065-.323-.567-1.127-1.839-2.41-2.974-1.287-1.138-3.082-2.16-5.37-2.16zm-6.912 5.63c.295-.516 1.035-1.685 2.205-2.72C4.461 4.21 6.03 3.333 8 3.333c1.97 0 3.54.877 4.707 1.91 1.17 1.035 1.91 2.204 2.205 2.72.008.015.01.028.01.037 0 .01-.002.022-.01.037-.295.516-1.035 1.685-2.205 2.72-1.168 1.033-2.737 1.91-4.707 1.91-1.97 0-3.54-.877-4.707-1.91-1.17-1.035-1.91-2.204-2.205-2.72-.008-.015-.01-.028-.01-.037 0-.01.002-.022.01-.037z"
-                                        clip-rule="evenodd" />
-                                </svg></span>
-                        </div>
-
-                        <span class="form__error form__error--passwordConfirm form__error--hide"></span>
-                    </div>
-
                     <button @click="signup()" class="ac-button is-lg is-solid is-primary e-sign-up-button form__button ">가입하기</button>
                     <div class="form__footer">
                         <span class="footer__policy">
@@ -150,7 +150,7 @@ import { useMemberStore } from '@/stores/useMemberStore';
 export default {
     name: 'SignupPage',
     data() {
-        return { member: { email: '', password: '' } }
+        return { member: { email: '', name:'', password: '' } }
     },
     computed: {
         ...mapStores(useMemberStore)
