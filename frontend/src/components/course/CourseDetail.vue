@@ -36,21 +36,7 @@
                 </div>
               </div>
               <div class="cd-header__right ac-cd-7 ac-ct-12">
-                <div class="cd-header__breadcrumb ">
-                  <div class="cd-header__breadcrumb-label-wrapper bootstrap-components">
-
-                  </div>
-
-                  <span class="cd-header__breadcrumb-el">개발 · 프로그래밍</span>
-                  <span class="infd-icon"><svg width="16" height="16" viewBox="0 0 16 16"
-                      xmlns="http://www.w3.org/2000/svg">
-                      <path fill="#212529" clip-rule="evenodd"
-                        d="m6.22 3.22c.293-.293.767-.293 1.06 0l4.25 4.25c.293.293.293.767 0 1.06l-4.25 4.25c-.293.293-.767.293-1.06 0s-.293-.767 0-1.06l3.72-3.72-3.72-3.72c-.293-.293-.293-.767 0-1.06z"
-                        fill-rule="evenodd"></path>
-                    </svg></span>
-                  <span class="cd-header__breadcrumb-el">프론트엔드</span>
-
-                </div>
+                
                 <div class="cd-header__title-container ">
                   <h1 class="cd-header__title">
                     {{ courseStore.course.name }} <span class="visually_hidden">대시보드</span>
@@ -129,8 +115,7 @@
                     </div>
                     <strong>(5)</strong>
                   </span>
-                  <a
-                    href="vue-%EB%81%9D%ED%8C%90%EC%99%95-nuxt3-%EC%99%84%EB%B2%BD%EB%A7%88%EC%8A%A4%ED%84%B0-1.html#reviews">11개의
+                  <a :href="'/course/'+courseStore.course.id+'#reviews'">11개의
                     수강평</a>&nbsp;∙&nbsp;
                   <span> <strong>91명</strong>의 수강생 </span>
                 </div>
@@ -152,18 +137,7 @@
                   </a>
                 </div>
 
-                <div class="cd-header__tags cd-header__sub-row  ">
-                  <span class="infd-icon"><svg width="16" xmlns="http://www.w3.org/2000/svg" height="16"
-                      viewBox="0 0 16 16">
-                      <path fill="#ffffff" fill-rule="evenodd"
-                        d="M5.773 1.455c-.283 0-.518.216-.542.498L5 4.727H2.545c-.3 0-.545.244-.545.546 0 .301.244.545.545.545H4.91l-.364 4.364h-2c-.3 0-.545.244-.545.545 0 .301.244.546.545.546h1.91l-.224 2.684c-.027.317.224.588.542.588.282 0 .518-.216.541-.498l.231-2.774H9.91l-.224 2.684c-.026.317.224.588.542.588.283 0 .518-.216.542-.498L11 11.273h2.454c.302 0 .546-.245.546-.546 0-.301-.244-.545-.546-.545h-2.363l.364-4.364h2c.3 0 .545-.244.545-.545 0-.302-.244-.546-.546-.546h-1.909l.224-2.684c.027-.317-.224-.588-.542-.588-.282 0-.518.216-.541.498l-.232 2.774H6.091l.224-2.684c.026-.317-.224-.588-.542-.588zM6 5.818l-.364 4.364H10l.364-4.364H6z"
-                        clip-rule="evenodd"></path>
-                    </svg></span>
-                  <a href="/tag-curation/skill/vuejs" target="_blank" class="cd-header__tag">Vue.js</a> <a
-                    href="/tag-curation/skill/nuxtjs" target="_blank" class="cd-header__tag">Nuxt.js</a> <a
-                    href="/tag-curation/skill/pinia" target="_blank" class="cd-header__tag">pinia</a> <a
-                    href="/tag-curation/skill/vue3" target="_blank" class="cd-header__tag">Vue 3</a>
-                </div>
+                
               </div>
             </div>
           </div>
@@ -293,19 +267,19 @@
       <div class="cd-menu">
         <div class="ac-container cd-menu__container">
           <span class="cd-menu__el description ">
-            <a href="vue-%EB%81%9D%ED%8C%90%EC%99%95-nuxt3-%EC%99%84%EB%B2%BD%EB%A7%88%EC%8A%A4%ED%84%B0-1.html#"
+            <a :href="'/course/'+courseStore.course.id+'#'"
               class="e-cd-menu__link" data-replace="true">
               강의소개
             </a>
           </span>
           <span class="cd-menu__el curriculum ">
-            <a href="vue-%EB%81%9D%ED%8C%90%EC%99%95-nuxt3-%EC%99%84%EB%B2%BD%EB%A7%88%EC%8A%A4%ED%84%B0-1.html#curriculum"
+            <a :href="'/course/'+courseStore.course.id+'#curriculum'"
               class="e-cd-menu__link" data-replace="true">
               커리큘럼
             </a>
           </span>
           <span class="cd-menu__el reviews ">
-            <a href="vue-%EB%81%9D%ED%8C%90%EC%99%95-nuxt3-%EC%99%84%EB%B2%BD%EB%A7%88%EC%8A%A4%ED%84%B0-1.html#reviews"
+            <a :href="'/course/'+courseStore.course.id+'#reviews'"
               class="e-cd-menu__link" data-replace="true">
               수강평<span class="cd-menu__count">11</span>
             </a>
