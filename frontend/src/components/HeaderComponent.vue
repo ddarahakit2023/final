@@ -45,8 +45,8 @@
       <div class="container mobile_container">
         <div class="content">
           <div class="mobile_left">
-            <span @click="mobileAsideActiveStore.toggleAside" class="infd-icon e_left_aside_btn" data-type="open"><svg width="30" height="30" viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg">
+            <span @click="mobileAsideActiveStore.toggleAside" class="infd-icon e_left_aside_btn" data-type="open"><svg
+                width="30" height="30" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill="#495057" fill-rule="evenodd" clip-rule="evenodd"
                   d="M1.5 6C1.22386 6 1 6.22386 1 6.5C1 6.77614 1.22386 7 1.5 7H10C10.2761 7 10.5 6.77614 10.5 6.5C10.5 6.22386 10.2761 6 10 6H1.5ZM1.5 16C1.22386 16 1 16.2239 1 16.5C1 16.7761 1.22386 17 1.5 17H10C10.2761 17 10.5 16.7761 10.5 16.5C10.5 16.2239 10.2761 16 10 16H1.5ZM1 11.5C1 11.2239 1.22386 11 1.5 11H8.5C8.77614 11 9 11.2239 9 11.5C9 11.7761 8.77614 12 8.5 12H1.5C1.22386 12 1 11.7761 1 11.5ZM15.5 15.5C17.7091 15.5 19.5 13.7091 19.5 11.5C19.5 9.29086 17.7091 7.5 15.5 7.5C13.2909 7.5 11.5 9.29086 11.5 11.5C11.5 13.7091 13.2909 15.5 15.5 15.5ZM15.5 16.5C16.7006 16.5 17.8024 16.0768 18.6644 15.3715L22.1464 18.8536C22.3417 19.0488 22.6583 19.0488 22.8536 18.8536C23.0488 18.6583 23.0488 18.3417 22.8536 18.1464L19.3715 14.6644C20.0768 13.8024 20.5 12.7006 20.5 11.5C20.5 8.73858 18.2614 6.5 15.5 6.5C12.7386 6.5 10.5 8.73858 10.5 11.5C10.5 14.2614 12.7386 16.5 15.5 16.5Z">
                 </path>
@@ -2838,10 +2838,216 @@
                 <span class="search__icon e-header-search"><i class="far fa-search"></i></span>
               </div>
 
-              <div class="navbar-item buttons">
-                <button type="button" class="button space-inset-4 signin">로그인</button>
+              <div v-if="memberStore.isLogin == false" class="navbar-item buttons">
+                <button @click="loginModalActiveStore.toggleLogin" type="button"
+                  class="button space-inset-4 signin">로그인</button>
                 <button type="button" class="e-signup button space-inset-4 is-primary">회원가입</button>
               </div>
+              <template v-else>
+                <div @click="logout()" class="navbar-item">
+                  
+                    로그아웃
+                  
+                </div>
+                <div class="navbar-item navbar-item-icon">
+                  <span class="icon_hoverble cart_hoverable">
+                    <button class="el cart_modal_btn e_cart_modal_btn nav-modal-btn e-nav-modal-btn">
+
+                      <a href="/carts" class="icon_cover gnb-cart">
+                        <span class="icon"><i class="fal fa-shopping-cart"></i></span>
+                        <span class="e-gnb-cart-badge"></span>
+                      </a>
+                      <a href="/carts" class="icon_cover is_active gnb-cart">
+                        <span class="icon"><i class="fas fa-shopping-cart"></i></span>
+                        <span class="e-gnb-cart-badge"></span>
+                      </a>
+                    </button>
+                    <div class="cart_modal_cover has_bubble e-nav-modal-cover">
+                      <div class="cart_modal">
+                        <section class="cart_modal__header">
+                          <h2 class="cart_modal__header__title">수강바구니 <span class="cart_modal__header__count">0</span>
+                          </h2>
+                          <span class="cart_modal__header__summary">총 결제금액<strong
+                              class="cart_modal__header__price">0</strong>원</span>
+                        </section>
+                        <section class="cart_modal__body" fxd-data="IN_WEAK_MAP">
+                          <div class="cart_modal__placeholder">
+                            <p class="cart_modal__placeholder__header">담긴 강의가 없습니다.</p>
+                            <p class="cart_modal__placeholder__desc">나를 성장 시켜줄 좋은 지식들을 찾아보세요.</p>
+                            <a href="/courses">
+
+                              <button
+                                class="ac-button is-md is-outlined is-primary cart_modal__placeholder__button e-cart-course-list-button ">강의리스트
+                                보기</button>
+                            </a>
+                          </div>
+                        </section>
+
+                        <section class="cart_modal__footer visually-hidden">
+                          <a href="/carts">
+
+                            <button
+                              class="ac-button is-md is-solid is-primary cart_modal__footer-link e-cart-total-button "
+                              style="min-width: 100%">수강바구니에서 전체보기</button>
+                          </a>
+                          <div class="cart_modal__button-layer"></div>
+                        </section>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+                <div class="navbar-item navbar-item-icon">
+                  <span class="icon_hoverble profile_hoverable">
+                    <button class="profile_modal_btn nav-modal-btn e-desktop-header-profile-image-container">
+                      <span class="cover">
+                        <span class="profile_cover thumbnail"><img
+                            src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                            alt="profile_img"></span>
+                        <span class="new-message-mark"></span>
+                      </span>
+                    </button>
+                    <div class="profile_modal_cover has_bubble nav-modal-cover e-profile-modal-cover">
+
+                      <div class="profile_modal">
+                        <div class="close_content">
+                          <span class="e_close_btn" data-type="close"> <span class="icon"><i
+                                class="fal fa-times"></i></span> </span>
+                          <a class="message-icon-cover" href="/user/messages">
+                            <span class="icon"><i class="fal fa-bell"></i></span> <span
+                              class="new-message-mark"></span></a>
+                        </div>
+                        <div class="info_content">
+                          <div class="top_content">
+                            <div class="user_content">
+                              <div class="left_content">
+                                <div class="thumbnail">
+                                  <img src="https://cdn.inflearn.com/public/main/profile/default_profile.png"
+                                    alt="profile_img" class="e-profile-image-popover"><a
+                                    href="/user/settings/account">설정</a>
+                                </div>
+                              </div>
+                              <div class="right_content">
+                                <a href="/users/1354061">
+                                  <span class="name"><i class="fad fa-home"></i>따라학IT</span>
+                                  <span class="icon"><i class="fas fa-chevron-right"></i></span></a>
+                                <div class="policy profile__role">
+                                  <span>학생</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="message_list_anchor_wrapper">
+                              <a href="/user/messages" class="message_list_anchor e-message-list-anchor"
+                                aria-label="알림 페이지">
+                                <i aria-hidden="true" class="fa-light fa-bell">
+                                  <span class="new-message-mark"></span>
+                                </i>
+                              </a>
+                            </div>
+                          </div>
+                          <div class="point_content">
+                            <a href="/user/coupons" class="coupon point_box">
+                              <span class="title">쿠폰</span>
+                              <span class="content"><span class="value">0</span>개</span>
+                            </a>
+                            <a href="/user/points" class="mileage point_box">
+                              <span class="title">포인트</span>
+                              <span class="content"><span class="value">0</span>잎</span>
+                            </a>
+                          </div>
+                        </div>
+
+                        <div class="menu_content">
+                          <div class="tab_content">
+
+                            <span class="tab_menu active" data-id="0">
+                              학생
+                            </span>
+
+                          </div>
+                          <div class="list_content">
+
+                            <div class="tab_list active" data-id="0">
+
+                              <div class="list_el ">
+                                <a href="/user/courses" class="title e-go_my_courses"> <span class="icon"><i
+                                      class="fal fa-books"></i></span> <span class="name">내 학습</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/roadmaps/enrolled" class="title e-go_my_courses"> <span class="icon"><i
+                                      class="fal fa-route"></i></span> <span class="name">내 로드맵</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/courses?charge=free&amp;order=seq" class="title "> <span class="icon"><i
+                                      class="fal fa-search-location"></i></span> <span class="name">추천 강의 찾기</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/dashboard" class="title "> <span class="icon"><i
+                                      class="fal fa-chart-pie"></i></span> <span class="name">대시보드</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/orders" class="title "> <span class="icon"><i
+                                      class="fal fa-receipt"></i></span> <span class="name">구매 내역</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/notes" class="title "> <span class="icon"><i
+                                      class="fal fa-pen-to-square"></i></span> <span class="name">강의노트</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/mentorings" class="title "> <span class="icon"><i
+                                      class="fal fa-lightbulb-on"></i></span> <span class="name">멘토링 신청 내역</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/posts" class="title "> <span class="icon"><i
+                                      class="fal fa-comment-alt-edit"></i></span> <span class="name">작성한 게시글</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/inquiries" class="title "> <span class="icon"><i
+                                      class="fal fa-question-circle"></i></span> <span class="name">수강전 문의</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/likes" class="title "> <span class="icon"><i
+                                      class="fal fa-heart"></i></span> <span class="name">좋아요</span> </a>
+                              </div>
+
+                              <div class="list_el ">
+                                <a href="/user/settings/account" class="title "> <span class="icon"><i
+                                      class="fal fa-gear"></i></span> <span class="name">설정</span> </a>
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <div class="footer_content">
+                          <span class="left_content">
+                            <a href="/user/signout" class="link e-logout">로그아웃</a>
+                          </span>
+                          <span class="right_content">
+                            <span class="link"><a href="/faq" class="link">고객센터</a><span class="icon"><i
+                                  class="fal fa-chevron-right"></i></span></span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </template>
+
+
+
+
+
+
             </div>
           </div>
         </div>
@@ -2853,12 +3059,20 @@
 <script>
 import { mapStores } from 'pinia'
 import { useMobileAsideActiveStore } from '@/stores/useMobileAsideActiveStore';
+import { useLoginModalActiveStore } from '@/stores/useLoginModalActiveStore';
+import { useMemberStore } from '@/stores/useMemberStore';
 
 export default {
   name: 'HeaderComponent',
   computed: {
-    ...mapStores(useMobileAsideActiveStore)
-  },
+    ...mapStores(useMobileAsideActiveStore),
+    ...mapStores(useLoginModalActiveStore),
+    ...mapStores(useMemberStore),
+  },methods: {
+        async logout() {
+          this.memberStore.logout();
+        }
+    }
 }
 </script>
 
