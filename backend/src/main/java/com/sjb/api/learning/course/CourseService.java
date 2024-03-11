@@ -156,7 +156,7 @@ public class CourseService {
             GetSectionRes getSectionRes = GetSectionRes.builder()
                     .id(section.getId())
                     .name(section.getName())
-                    .getLectureResList(lectures)
+                    .lectures(lectures)
                     .build();
             sections.add(getSectionRes);
         }
@@ -168,7 +168,7 @@ public class CourseService {
                 .image(course.getImage())
                 .description(course.getDescription())
                 .price(course.getPrice())
-                .getSectionResList(sections)
+                .sections(sections)
                 .build();
         return response;
     }

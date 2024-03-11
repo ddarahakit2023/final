@@ -11,5 +11,5 @@ public class GetSectionRes {
     private Long id;
     private String name;
 
-    List<GetLectureRes> getLectureResList;
+    List<GetLectureRes> lectures;
 }
