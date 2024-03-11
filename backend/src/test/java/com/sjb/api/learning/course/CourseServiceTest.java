@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.sjb.api.common.BaseException;
 import com.sjb.api.learning.course.model.Course;
 import com.sjb.api.learning.course.model.request.PostCourseReq;
+import com.sjb.api.learning.course.model.response.GetCourseDetailRes;
 import com.sjb.api.learning.course.model.response.GetCourseRes;
 import com.sjb.api.learning.course.model.response.PostCourseRes;
 import com.sjb.api.member.MemberService;
@@ -156,7 +157,7 @@ class CourseServiceTest {
         // given
         given(courseRepository.findById(any(Long.class))).willReturn(Optional.of(course));
         // when
-        GetCourseRes response;
+        GetCourseDetailRes response;
         try {
             response = courseService.readCourse(1L);
         } catch (BaseException e) {

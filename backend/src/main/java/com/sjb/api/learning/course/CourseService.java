@@ -4,9 +4,12 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.sjb.api.common.BaseException;
 import com.sjb.api.learning.course.model.Course;
+import com.sjb.api.learning.course.model.Lecture;
+import com.sjb.api.learning.course.model.Section;
 import com.sjb.api.learning.course.model.request.PostCourseReq;
-import com.sjb.api.learning.course.model.response.GetCourseRes;
-import com.sjb.api.learning.course.model.response.PostCourseRes;
+import com.sjb.api.learning.course.model.request.PostLectureReq;
+import com.sjb.api.learning.course.model.request.PostSectionReq;
+import com.sjb.api.learning.course.model.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -28,10 +31,14 @@ import static com.sjb.api.common.BaseResponseStatus.*;
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
+    private final SectionRepository sectionRepository;
+    private final LectureRepository lectureRepository;
+
     private final AmazonS3 s3;
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    @Transactional
     public PostCourseRes createCourse(MultipartFile image, PostCourseReq request) throws BaseException {
 
         if(courseRepository.existsByName(request.getName())) {
@@ -53,6 +60,27 @@ public class CourseService {
 
         course = courseRepository.save(course);
 
+        if (request.getSections() != null) {
+            for (PostSectionReq postSectionReq : request.getSections()) {
+                Section section = Section.builder()
+                        .name(postSectionReq.getName())
+                        .course(course)
+                        .build();
+                sectionRepository.save(section);
+                if (postSectionReq.getLectures() != null) {
+                    for (PostLectureReq postLectureReq : postSectionReq.getLectures()) {
+                        Lecture lecture = Lecture.builder()
+                                .name(postLectureReq.getName())
+                                .playTime(postLectureReq.getPlayTime())
+                                .videoUrl(postLectureReq.getVideoUrl())
+                                .section(section)
+                                .build();
+                        lectureRepository.save(lecture);
+                    }
+                }
+
+            }
+        }
 
         return PostCourseRes.builder()
                 .id(course.getId())
@@ -108,16 +136,40 @@ public class CourseService {
         return getCourseResList;
     }
 
-    public GetCourseRes readCourse(Long id) throws BaseException {
+    @Transactional
+    public GetCourseDetailRes readCourse(Long id) throws BaseException {
         Course course = courseRepository.findById(id).orElseThrow(() -> new BaseException(COURSE_NULL));
 
-        GetCourseRes getCourseRes = GetCourseRes.builder()
+        List<GetSectionRes> sections = new ArrayList<>();
+        for (Section section : course.getSections()) {
+            List<GetLectureRes> lectures = new ArrayList<>();
+            for (Lecture lecture : section.getLectures()) {
+
+                GetLectureRes getLectureRes = GetLectureRes.builder()
+                        .id(lecture.getId())
+                        .name(lecture.getName())
+                        .playTime(lecture.getPlayTime())
+                        .videoUrl(lecture.getVideoUrl())
+                        .build();
+                lectures.add(getLectureRes);
+            }
+            GetSectionRes getSectionRes = GetSectionRes.builder()
+                    .id(section.getId())
+                    .name(section.getName())
+                    .getLectureResList(lectures)
+                    .build();
+            sections.add(getSectionRes);
+        }
+
+
+        GetCourseDetailRes response = GetCourseDetailRes.builder()
                 .id(course.getId())
                 .name(course.getName())
                 .image(course.getImage())
                 .description(course.getDescription())
                 .price(course.getPrice())
+                .getSectionResList(sections)
                 .build();
-        return getCourseRes;
+        return response;
     }
 }

@@ -1,15 +1,11 @@
 package com.sjb.api.learning.course.model;
 
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
-import javax.validation.constraints.Min;
 import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -17,33 +13,29 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Course {
+public class Lecture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 100)
     private String name;
 
+    private Integer playTime;
+
     @Column(length = 200)
-    private String image;
+    private String videoUrl;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
 
-    @Min(0)
-    private Integer price;
-
-    @ColumnDefault("1")
-    private Boolean isDisplay;
+    @ManyToOne
+    @JoinColumn(name = "Section_id")
+    private Section section;
 
     @Column(updatable = false, nullable = false)
     private Date createdAt;
 
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "course")
-    private List<Section> sections = new ArrayList<>();
 
     @PrePersist
     void createdAt() {
@@ -55,6 +47,5 @@ public class Course {
     void updatedAt() {
         this.updatedAt = Timestamp.from(Instant.now());
     }
-
 
 }
