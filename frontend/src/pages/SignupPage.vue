@@ -174,49 +174,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-    font-family: Pretendard;
-    font-weight: 700;
-    src: local("Pretendard Bold"), url(https://cdn.inflearn.com/font/Pretendard-Bold.woff2) format("woff2"), url(https://cdn.inflearn.com/font/Pretendard-Bold.woff) format("woff")
-}
-
-@font-face {
-    font-family: Pretendard;
-    font-weight: 600;
-    src: local("Pretendard SemiBold"), url(https://cdn.inflearn.com/font/Pretendard-SemiBold.woff2) format("woff2"), url(https://cdn.inflearn.com/font/Pretendard-SemiBold.woff) format("woff")
-}
-
-@font-face {
-    font-family: Pretendard;
-    font-weight: 500;
-    src: local("Pretendard Medium"), url(https://cdn.inflearn.com/font/Pretendard-Medium.woff2) format("woff2"), url(https://cdn.inflearn.com/font/Pretendard-Medium.woff) format("woff")
-}
-
-@font-face {
-    font-family: Pretendard;
-    font-weight: 400;
-    src: local("Pretendard Regular"), url(https://cdn.inflearn.com/font/Pretendard-Regular.woff2) format("woff2"), url(https://cdn.inflearn.com/font/Pretendard-Regular.woff) format("woff")
-}
-
-@font-face {
-    font-family: Pretendard;
-    font-weight: 300;
-    src: local("Pretendard Light"), url(https://cdn.inflearn.com/font/Pretendard-Light.woff2) format("woff2"), url(https://cdn.inflearn.com/font/Pretendard-Light.woff) format("woff")
-}
-
-@font-face {
-    font-family: D2 coding;
-    font-style: normal;
-    font-weight: 400;
-    src: local("D2Coding"), url(https://cdn.inflearn.com/font/D2Coding.woff2) format("woff2"), url(https://cdn.inflearn.com/font/D2Coding.woff) format("woff"), url(https://cdn.inflearn.com/font/D2Coding.ttf) format("truetype")
-}
-
-@font-face {
-    font-family: NanumMyeongjoExtraBold;
-    font-weight: 800;
-    src: local("NanumMyeongjoExtraBold"), url(https://cdn.inflearn.com/font/NanumMyeongjoExtraBold.woff2) format("woff2"), url(https://cdn.inflearn.com/font/NanumMyeongjoExtraBold.woff) format("woff"), url(https://cdn.inflearn.com/font/NanumMyeongjoExtraBold.ttf) format("truetype")
-}
-
 .space-inset-2 {
     padding: 4px
 }

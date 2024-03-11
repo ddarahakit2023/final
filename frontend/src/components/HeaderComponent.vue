@@ -2841,7 +2841,7 @@
               <div v-if="memberStore.isLogin == false" class="navbar-item buttons">
                 <button @click="loginModalActiveStore.toggleLogin" type="button"
                   class="button space-inset-4 signin">로그인</button>
-                <button type="button" class="e-signup button space-inset-4 is-primary">회원가입</button>
+                <a href="/member/signup" type="button" class="e-signup button space-inset-4 is-primary">회원가입</a>
               </div>
               <template v-else>
                 <div @click="logout()" class="navbar-item">

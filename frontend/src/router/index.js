@@ -3,6 +3,7 @@ import CourseList from "@/components/course/CourseList.vue"
 import CourseDetail from "@/components/course/CourseDetail.vue"
 import CoursePage from "@/pages/CoursePage.vue";
 import SignupPage from "@/pages/SignupPage.vue";
+import CartPage from "@/pages/CartPage.vue";
 
 const routes = [
   {
@@ -14,8 +15,12 @@ const routes = [
     ],
   },
   {
-    path: "/user/signup",
+    path: "/member/signup",
     component: SignupPage,
+  },
+  {
+    path: "/cart",
+    component: CartPage,
   },
 ];
 
