@@ -14,5 +14,5 @@ public class GetCourseDetailRes {
     private String description;
     private Integer price;
 
-    List<GetSectionRes> getSectionResList;
+    List<GetSectionRes> sections;
 }
