@@ -123,6 +123,7 @@ class CourseServiceTest {
         List<Course> result = new ArrayList<>();
         result.add(course);
         given(courseRepository.findAll()).willReturn(result);
+
         // when
         List<GetCourseRes> response;
         try {
