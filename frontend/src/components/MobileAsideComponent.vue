@@ -2997,10 +2997,7 @@ import { mapStores } from 'pinia'
 import { useMobileAsideActiveStore } from '@/stores/useMobileAsideActiveStore';
 
 export default {
-    name: 'HeaderComponent',
-    data() {
-        return { isActive: false }
-    },
+    name: 'MobileAsideComponent',
     computed: {
         ...mapStores(useMobileAsideActiveStore)
     },
