@@ -28,6 +28,7 @@ public class JwtTokenUtils {
         Claims claims = Jwts.claims();
         claims.put("id", member.getId());
         claims.put("name", member.getName());
+        claims.put("email", member.getEmail());
         claims.put("roles", member.getAuthority());
 
         String token = Jwts.builder()
