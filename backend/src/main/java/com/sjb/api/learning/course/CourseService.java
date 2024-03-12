@@ -172,4 +172,11 @@ public class CourseService {
                 .build();
         return response;
     }
+
+
+    public Integer getCoursePrice(Long id) throws BaseException {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new BaseException(COURSE_NULL));
+
+        return course.getPrice();
+    }
 }

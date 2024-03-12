@@ -6,8 +6,11 @@ import com.sjb.api.learning.course.model.request.PostCourseReq;
 import com.sjb.api.learning.course.model.response.GetCourseDetailRes;
 import com.sjb.api.learning.course.model.response.GetCourseRes;
 import com.sjb.api.learning.course.model.response.PostCourseRes;
+import com.sjb.api.member.model.Member;
+import com.sjb.api.orders.OrdersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +24,7 @@ import static com.sjb.api.common.BaseResponseStatus.*;
 @RequestMapping("/course")
 public class CourseController {
     private final CourseService courseService;
-
+    private final OrdersService ordersService;
     @RequestMapping(method = RequestMethod.POST, value = "/create")
     public BaseResponse<PostCourseRes> createCourse(@RequestPart MultipartFile image, @RequestPart  PostCourseReq request) {
 
@@ -55,9 +58,13 @@ public class CourseController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    public BaseResponse<GetCourseDetailRes> readCourse(@PathVariable Long id) {
+    public BaseResponse<GetCourseDetailRes> readCourse(@AuthenticationPrincipal Member member, @PathVariable Long id) {
         try {
             GetCourseDetailRes response = courseService.readCourse(id);
+
+            Boolean isOrdered = ordersService.checkOrdered(member, id);
+            response.setOrdered(isOrdered);
+
             return new BaseResponse<>(response);
         } catch(BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
