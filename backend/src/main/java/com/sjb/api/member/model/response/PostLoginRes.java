@@ -6,7 +6,6 @@ import lombok.Getter;
 
 @Getter
 @Builder
-@AllArgsConstructor
 public class PostLoginRes {
     private String accessToken;
 }

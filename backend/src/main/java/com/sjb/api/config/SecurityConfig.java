@@ -39,6 +39,7 @@ public class SecurityConfig {
                     .authorizeRequests()
                     .antMatchers("/member/test").hasRole("USER")
                     .antMatchers("/member/test/teacher").hasRole("TEACHER")
+                    .antMatchers("/orders/validation").hasRole("USER")
                     .antMatchers("/**").permitAll()
                     .anyRequest().authenticated()
                     .and()

@@ -16,6 +16,12 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -76,6 +82,11 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.iamport</groupId>
+			<artifactId>iamport-rest-client-java</artifactId>
+			<version>0.2.23</version>
 		</dependency>
 	</dependencies>
 

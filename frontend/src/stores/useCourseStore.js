@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import VueCookies from "vue-cookies";
 
 const backend = "http://localhost:8080";
 
@@ -8,6 +9,7 @@ export const useCourseStore = defineStore("course", {
     course: {
       id: 0,
       name: "",
+      ordered: false,
       description: "",
       sections: [
         {
@@ -30,11 +32,23 @@ export const useCourseStore = defineStore("course", {
       return this.courseList;
     },
     async getCourseDetail(id) {
-      let response = await axios.get(backend + "/course/" + id);
+      if (VueCookies.get("token") != null) {
+        let response = await axios.get(backend + "/course/" + id, {
+          headers: {
+            Authorization: "Bearer " + VueCookies.get("token"),
+          },
+        });
 
-      this.course = response.data.result;
+        this.course = response.data.result;
 
-      return this.course;
+        return this.course;
+      } else {
+        let response = await axios.get(backend + "/course/" + id);
+
+        this.course = response.data.result;
+
+        return this.course;
+      }
     },
   },
 });
