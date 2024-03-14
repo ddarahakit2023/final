@@ -24,7 +24,7 @@ const routes = [
     component: CartPage,
   },
   {
-    path: "/lecture",
+    path: "/lecture/:courseId/:lectureId",
     component: LecturePage,
   },
 ];

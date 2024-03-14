@@ -39,7 +39,8 @@ public enum BaseResponseStatus {
      * 4000 : 주문 및 결제 에러
      */
     ORDERS_VALIDATION_FAIL(false, 4001, "결제 정보가 잘못되었습니다."),
-    IAMPORT_ERROR(false, 4002, "결제 정도가 잘못되었습니다.");
+    IAMPORT_ERROR(false, 4002, "결제 정도가 잘못되었습니다."),
+    ORDERS_NOT_ORDERED(false, 4003, "결제 정보가 없습니다. 구해 후 이용해주세요.");
 
 
     private final boolean isSuccess;
