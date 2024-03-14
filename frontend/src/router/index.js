@@ -4,6 +4,7 @@ import CourseDetail from "@/components/course/CourseDetail.vue"
 import CoursePage from "@/pages/CoursePage.vue";
 import SignupPage from "@/pages/SignupPage.vue";
 import CartPage from "@/pages/CartPage.vue";
+import LecturePage from "@/pages/LecturePage.vue";
 
 const routes = [
   {
@@ -21,6 +22,10 @@ const routes = [
   {
     path: "/cart",
     component: CartPage,
+  },
+  {
+    path: "/lecture",
+    component: LecturePage,
   },
 ];
 
