@@ -1772,10 +1772,10 @@
 
                                             </div>
                                             <div class="cd-floating__buttons">
-
-                                                <button v-if="courseStore.course.ordered"
+                                                <!-- TODO : 이어서 학습하기 기능 때 수정 -->
+                                                <a :href="'/lecture/'+$route.params.id+'/1'" v-if="courseStore.course.ordered"
                                                     class="ac-button is-lg is-solid is-primary floating__main-button e-enrol "
-                                                    data-type="cart">이어서 학습하기</button>
+                                                    data-type="cart">이어서 학습하기</a>
 
                                                 <button v-else @click="enrollment"
                                                     class="ac-button is-lg is-solid is-primary floating__main-button e-enrol "

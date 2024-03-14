@@ -173,6 +173,54 @@ public class CourseService {
         return response;
     }
 
+    @Transactional
+    public GetLectureDetailRes readLecture(Long courseId, Long lectureId) throws BaseException {
+        Course course = courseRepository.findById(courseId).orElseThrow(() -> new BaseException(COURSE_NULL));
+        String lectureName = null;
+        String videoUrl = null;
+        List<GetSectionRes> sections = new ArrayList<>();
+        Integer totalLectureCount = 0;
+        Integer totalPlayTime = 0;
+
+        for (Section section : course.getSections()) {
+            List<GetLectureRes> lectures = new ArrayList<>();
+            for (Lecture lecture : section.getLectures()) {
+                if(lectureId.equals(lecture.getId())) {
+                    lectureName = lecture.getName();
+                    videoUrl = lecture.getVideoUrl();
+                }
+                GetLectureRes getLectureRes = GetLectureRes.builder()
+                        .id(lecture.getId())
+                        .name(lecture.getName())
+                        .playTime(lecture.getPlayTime())
+                        .videoUrl(lecture.getVideoUrl())
+                        .build();
+                lectures.add(getLectureRes);
+                totalLectureCount++;
+                totalPlayTime+= lecture.getPlayTime();
+            }
+            GetSectionRes getSectionRes = GetSectionRes.builder()
+                    .id(section.getId())
+                    .name(section.getName())
+                    .lectures(lectures)
+                    .build();
+            sections.add(getSectionRes);
+        }
+
+
+        GetLectureDetailRes response = GetLectureDetailRes.builder()
+                .id(course.getId())
+                .courseName(course.getName())
+                .lectureName(lectureName)
+                .videoUrl(videoUrl)
+                .totalLectureCount(totalLectureCount)
+                .totalPlayTime(totalPlayTime)
+                .sections(sections)
+                .build();
+
+        return response;
+    }
+
 
     public Integer getCoursePrice(Long id) throws BaseException {
         Course course = courseRepository.findById(id).orElseThrow(() -> new BaseException(COURSE_NULL));

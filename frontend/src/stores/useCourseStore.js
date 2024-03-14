@@ -20,6 +20,21 @@ export const useCourseStore = defineStore("course", {
       ],
       price: 0,
     },
+    lecture: {
+      id: 0,
+      courseName: "",
+      lectureName: "",
+      totalPlayTime: 0,
+      totalLectureCount: 0,
+      sections: [
+        {
+          id: 0,
+          name: "",
+          lectures: [{ id: 0, name: "", playTime: 0, videoUrl: "" }],
+        },
+      ],
+      price: 0,
+    },
     courseList: [],
   }),
 
@@ -48,6 +63,23 @@ export const useCourseStore = defineStore("course", {
         this.course = response.data.result;
 
         return this.course;
+      }
+    },
+
+    async getLectureDetail(courseId, lectureId) {
+      if (VueCookies.get("token") != null) {
+        let response = await axios.get(
+          backend + "/lecture/" + courseId + "/" + lectureId,
+          {
+            headers: {
+              Authorization: "Bearer " + VueCookies.get("token"),
+            },
+          }
+        );
+
+        this.lecture = response.data.result;
+
+        return this.lecture;
       }
     },
   },
