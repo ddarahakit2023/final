@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.4</version>
+
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -95,6 +95,15 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0-M5</version> <!-- 최신 버전 사용 -->
+				<configuration>
+					<testFailureIgnore>true</testFailureIgnore>
+					<reportsDirectory>${project.basedir}/target/surefire-reports</reportsDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

@@ -139,28 +139,29 @@ public class CourseService {
     @Transactional
     public GetCourseDetailRes readCourse(Long id) throws BaseException {
         Course course = courseRepository.findById(id).orElseThrow(() -> new BaseException(COURSE_NULL));
-
         List<GetSectionRes> sections = new ArrayList<>();
-        for (Section section : course.getSections()) {
-            List<GetLectureRes> lectures = new ArrayList<>();
-            for (Lecture lecture : section.getLectures()) {
 
-                GetLectureRes getLectureRes = GetLectureRes.builder()
-                        .id(lecture.getId())
-                        .name(lecture.getName())
-                        .playTime(lecture.getPlayTime())
-                        .videoUrl(lecture.getVideoUrl())
+        if(course.getSections() != null && !course.getSections().isEmpty()) {
+            for (Section section : course.getSections()) {
+                List<GetLectureRes> lectures = new ArrayList<>();
+                for (Lecture lecture : section.getLectures()) {
+
+                    GetLectureRes getLectureRes = GetLectureRes.builder()
+                            .id(lecture.getId())
+                            .name(lecture.getName())
+                            .playTime(lecture.getPlayTime())
+                            .videoUrl(lecture.getVideoUrl())
+                            .build();
+                    lectures.add(getLectureRes);
+                }
+                GetSectionRes getSectionRes = GetSectionRes.builder()
+                        .id(section.getId())
+                        .name(section.getName())
+                        .lectures(lectures)
                         .build();
-                lectures.add(getLectureRes);
+                sections.add(getSectionRes);
             }
-            GetSectionRes getSectionRes = GetSectionRes.builder()
-                    .id(section.getId())
-                    .name(section.getName())
-                    .lectures(lectures)
-                    .build();
-            sections.add(getSectionRes);
         }
-
 
         GetCourseDetailRes response = GetCourseDetailRes.builder()
                 .id(course.getId())
